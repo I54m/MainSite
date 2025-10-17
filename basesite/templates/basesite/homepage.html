@@ -1,0 +1,85 @@
+{% extends './base.html' %}
+{% load static %}
+{% block title %}
+<title>i54m.com | Homepage</title>
+{% endblock %}
+{% block content %}
+  {% comment %} TODO scroll animations?? {% endcomment %}
+
+  {% if carouselitems.count != 0 %}
+    <div id="homepagecarousel" class="carousel slide carousel-fade mb-3 bg-dark" data-bs-ride="carousel">
+      
+      <div class="carousel-inner h-100">
+
+        <div class="carousel-indicators">
+          {% for item in carouselitems %}
+            <button type="button" data-bs-target="#homepagecarousel" data-bs-slide-to="{{ forloop.counter0 }}"
+            {% if forloop.first %}
+              class="active" aria-current="true"
+            {% endif %}
+            aria-label="Slide {{ forloop.counter1 }}"></button>
+          {% endfor %}
+        </div>
+
+        {% for item in carouselitems %}
+          {% if forloop.first %}
+            <div class="carousel-item active h-100">
+          {% else %}
+            <div class="carousel-item h-100">
+          {% endif %}
+              <div class="overlay-image" style="background-image: url({{ item.background_image.url }});"></div>
+              <div class=" container-md carousel-caption text-start">
+                <h1>{{ item.heading }}</h1>
+                <p>{{ item.content }}</p>
+                {% if item.link %}
+                  <p><a class="btn btn-lg btn-primary" href="{{ item.link }}">{{ item.button_text }}</a></p>
+                {% endif %}
+              </div>
+            
+
+            </div>
+        {% endfor %}
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#homepagecarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#homepagecarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+
+      </div>
+
+    </div>
+  {% endif %}
+
+  <div class="container-md">
+      <h1 class="my-3">{{ pagecontent.heading }}</h1>
+
+      <div class="content">
+        {{ pagecontent.content|safe }}
+      </div>
+
+    {% if featuredprojects.count != 0 %}
+      <hr class="mt-5">
+      <h1>Featured Projects</h1>
+        <ul class="cards mb-3 justify-content-start">
+        {% for project in featuredprojects %}
+          <a class="card-link" href="{% url 'portfolio:detail' project.slug %}">
+            <li class="card bg-dark hover my-3 ">
+
+              <img class="card-img-top" src="{{ project.thumbnail.url }}" alt="{{ project.title }} image" />
+              
+              <div class="card-body">
+                <h3 class="card-title">{{ project.title }}</h3>
+                <div class="card-content"><p>{{ project.summary }}</p></div>
+              </div>
+
+            </li>
+          </a>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+{% endblock %}

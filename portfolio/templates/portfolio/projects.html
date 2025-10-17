@@ -1,0 +1,47 @@
+{% extends 'basesite/base.html' %}
+{% load static %}
+{% block title %}
+<title>i54m.com | Projects </title>
+{% endblock %}
+{% block content %}
+
+{% comment %} TODO scroll animations?? {% endcomment %}
+
+<div class="container">
+
+  <h1 class="my-3">My Projects</h1>
+  {% if categorys.count < 1 %}
+    <p>There's nothing here just yet....</p>
+  {% endif %}
+  {% for category in categorys %}
+    {% if category.project_set.count != 0 %}
+      <hr class="mt-5">
+      <div id="{{ category.name }}" class="py-6">
+        <h2 class="text-center">{{ category.name }}</h2>
+        {% if category.summary %}
+          <p class="text-center">{{ category.summary }}</p>
+        {% endif %}
+      </div>
+          <ul class="cards mb-3">
+          {% for project in category.project_set.all %}
+            {% if project.visible %}
+                <a class="card-link" href="{% url 'portfolio:detail' project.slug %}">
+                  <li class="card bg-dark hover my-3">                 
+
+                    <img class="card-img-top" src="{{ project.thumbnail.url }}" alt="{{ project.title }} image" />
+                    
+                    <div class="card-body">
+                      <h3 class="card-title">{{ project.title }}</h3>
+                      <div class="card-content"><p>{{ project.summary }}</p></div>
+                    </div>
+
+                  </li>
+                </a>
+            {% endif %}
+          {% endfor %}
+        </ul>
+    {% endif %}
+  {% endfor %}
+</div>
+
+{% endblock %}

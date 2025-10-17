@@ -1,0 +1,104 @@
+{% extends 'basesite/base.html' %}
+{% load static %}
+{% block title %}
+<title>i54m.com | Projects &RightAngleBracket; {{ project.title }} </title>
+{% endblock %}
+{% block content %}
+  <div class="container">
+
+    {% if project.visible == False %}
+      <div class="alert alert-warning" role="alert">
+        This project is not visible on the <a href="{% url 'portfolio:projects' %}" class="alert-link" style="font-weight: 700 !important; color: var(--bs-alert-link-color) !important;">projects page</a> and likely contains incomplete or outdated information!
+      </div>
+    {% endif %}
+
+    <h1 class="my-3">{{ project.category.name }} - {{ project.title }}</h1>
+
+
+    {% if project.gallery_set.count != 0 %}
+      <div id="projectgallery" class="carousel slide mb-3 bg-dark" data-bs-ride="carousel">
+        
+        <div class="carousel-inner">
+
+          <div class="carousel-indicators">
+            {% for gallery in project.gallery_set.all %}
+              <button type="button" data-bs-target="#projectgallery" data-bs-slide-to="{{ forloop.counter0 }}"
+              {% if forloop.first %}
+                class="active" aria-current="true"
+              {% endif %}
+              aria-label="Slide {{forloop.counter1}}"></button>
+            {% endfor %}
+          </div>
+
+          {% for gallery in project.gallery_set.all %}
+            {% if forloop.first %}
+              <div class="carousel-item active" style="height: 46rem;">
+            {% else %}
+              <div class="carousel-item" style="height: 46rem;">
+            {% endif %}
+                <div class="h-100 d-flex justify-content-center">
+                  <a href="{{ gallery.image.url }}"><img class="img-fluid h-100" src="{{ gallery.image.url }}" alt="{{ project.name }} Gallery Image" style="opacity: 0.9;"></a>
+                </div>
+              </div>
+          {% endfor %}
+
+          <button class="carousel-control-prev" type="button" data-bs-target="#projectgallery" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#projectgallery" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+
+        </div>
+
+      </div>
+    {% endif %}
+
+
+    <div class="row gy-3">
+
+      <div class="col-md-9">
+        <p>{{ project.description|safe }}</p>
+      </div>
+
+      <div class="col-md-3">
+        <img id="thumbnail" class="img-fluid mb-3" src="{{ project.thumbnail.url }}" alt="{{ project.name }} thumbnail image" />
+        <h5>About the Project:</h5>
+        <p>{{ project.summary }}</p>
+        <h5>Date Project Started:</h5>
+        <p>{{ project.start_date }}</p>
+        <h5>Technology used:</h5>
+        <p>{{ project.technology }}</p>
+        {% if project.credit_set.count != 0 %}
+          <h5>Credits:</h5>
+          <p>
+          {% for credits in project.credit_set.all %}
+            {{ credits.person }} - {{ credits.credited_for }}
+          {% endfor %}
+          </p>
+        {% endif %}
+        <br />
+
+        {% if project.demo_url %}
+          <div class="container hover mb-4">
+            <a href="{{ project.demo_url }}"><h4>View Project Demo</h4></a>
+          </div>
+        {% endif %}
+        {% if project.github_url %}
+          <div class="container hover mb-4">
+            <a href="{{ project.github_url }}"><img src="{% static 'portfolio/images/github-mark-white.svg' %}" alt="Github Logo" style="width: 15%;"/><img src="{% static 'portfolio/images/github-title-white.png' %}" alt="Github" style="width: 30%;"/></a>
+          </div>
+        {% endif %}
+        {% if project.jenkins_url %}
+          <div class="container hover">
+            <a class="hover"  href="{{ project.jenkins_url }}"><img src="{% static 'portfolio/images/jenkins-logo.svg' %}" alt="Jenkins Logo" style="width: 15%;"/><img src="{% static 'portfolio/images/jenkins-title-white.svg' %}" alt="Jenkins" style="width: 30%;"/></a>
+          </div>
+        {% endif %}
+        
+      </div>
+      
+    </div>
+  </div>
+{% endblock %}

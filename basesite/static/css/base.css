@@ -1,0 +1,144 @@
+body {
+  background: #212121 !important;
+  color: #eeeeee !important;
+}
+
+a, .hover {
+  transition: .2s !important;
+  color: #eeeeee !important;
+  text-decoration: none !important;
+}
+
+.hover:hover, .hover:focus {
+  transform: scale(1.05) !important;
+  opacity: 0.9 !important;
+}
+
+a.hover:hover, a.hover:focus {
+  transform: scale(1.15) !important;
+  color: #5b5b5b !important;
+}
+
+a:hover {
+  color: #eeeeee !important;
+  text-decoration: none !important;
+}
+
+.content {
+  color: #eeeeee !important;
+}
+
+.overlay-image {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  background-position: center;
+  background-size: cover;
+  opacity: 0.5;
+}
+
+#homepagecarousel .carousel-item {
+  background-color: #000000;
+}
+#homepagecarousel {
+  height: 35rem;
+}
+.carousel-control-prev, .carousel-control-next {
+  max-width: 150px;
+}
+
+#thumbnail {
+  max-width: 256px;
+  max-height: 256px;
+}
+
+.container {
+  max-width: 1400px;
+  padding: 0 15px;
+  margin: 0 auto;
+}
+
+.cards {
+  display: grid;
+  grid-auto-columns: 100%;
+  grid-column-gap: 10px;
+  grid-auto-flow: column;
+  padding: 25px;
+  list-style: none;
+  overflow-x: auto;
+  overflow-y: hidden;
+  mask: linear-gradient(90deg,#0000,#000 3% 97%,#0000);
+  /*box-shadow: 30px 0 20px -20px #fff inset, -60px 0 20px -25px #fff inset;*/
+  /*-ms-scroll-snap-type: x mandatory;
+  scroll-snap-type: x mandatory;*/
+}
+
+.cards:first-child {
+  margin-left: 150px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 15%);
+  height: 95%;
+  max-width: 512px;
+  min-width: 128px;
+}
+
+.card .card-img-top {
+  object-fit: cover;
+  object-position: center;
+  max-height: 512px;
+  min-height: 128px;
+}
+
+.card .card-title {
+  font-size: 20px;
+}
+
+.card .card-content {
+  margin: 20px 0;
+  max-width: 512px;
+}
+
+.cards::-webkit-scrollbar {
+  height: 14px;
+}
+
+.cards::-webkit-scrollbar-thumb,
+.cards::-webkit-scrollbar-track {
+  border-radius: 92px;
+}
+
+.cards::-webkit-scrollbar-thumb {
+  background: #5b5b5b;
+}
+
+.cards::-webkit-scrollbar-track {
+  background: #eeeeee;
+}
+
+@media (min-width: 500px) {
+  .cards {
+      grid-auto-columns: calc(50% - 15px);
+      grid-column-gap: 20px;
+  }
+}
+
+@media (min-width: 700px) {
+  .cards {
+      grid-auto-columns: calc(256px - 25px);
+      grid-column-gap: 30px;
+  }
+}
+
+@media (min-width: 1100px) {
+  .cards {
+      grid-auto-columns: calc(25% - 35px);
+      grid-column-gap: 40px;
+  }
+}
