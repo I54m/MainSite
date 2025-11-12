@@ -11,18 +11,30 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import environ
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Initialize environment variables
+env = environ.Env(DEBUG=(bool, False))
+
+# Determine environment, default to local
+DJANGO_ENV = os.getenv('DJANGO_ENV', 'local')
+
+# Point to the correct .env file
+env_file = os.path.join(BASE_DIR, f'.env.{DJANGO_ENV}')
+
+# Load environment variables
+environ.Env.read_env(env_file)
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-with open('/usr/share/django/config/MainSite/secret_key.txt') as f:
-    SECRET_KEY = f.read().strip()
+SECRET_KEY = env('SECRET_KEY')
 
 AUTH_USER_MODEL = 'i54m_apiuser.ApiUser'
 
@@ -39,7 +51,7 @@ CSRF_TRUSTED_ORIGINS = ['https://i54m.com', 'https://*.i54m.com']
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG', default=False)
 
 ALLOWED_HOSTS = ['i54m.com', 'www.i54m.com', 'test.i54m.com', 'beta.i54m.com']
 
@@ -94,10 +106,12 @@ WSGI_APPLICATION = 'MainSite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'OPTIONS': {
-            'read_default_file': '/usr/share/django/config/MainSite/my.cnf',
-        },
+        'ENGINE': env('DB_ENGINE'),
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT'),
         'TEST': {
             'NAME': 'test_django'
         },
@@ -142,10 +156,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+STATIC_ROOT = os.path.join(BASE_DIR, "../.static/")
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_ROOT = os.path.join(BASE_DIR, '../media/')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
