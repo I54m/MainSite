@@ -1,6 +1,7 @@
 Django==4.2.13
 django_resized==1.0.2
 django_tinymce==4.0.0
+django-environ==0.12.0
 django-i54m-apiuser @ file:///usr/share/django/django-i54m-apiuser/dist/django-i54m-apiuser-0.2.2.tar.gz#sha256=c78536264d39218aa389575fd637981bedda6064f3eec0b2cb49237a281ac219
 future==1.0.0
 gunicorn==23.0.0
