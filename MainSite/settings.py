@@ -24,7 +24,7 @@ env = environ.Env(DEBUG=(bool, False))
 DJANGO_ENV = os.getenv('DJANGO_ENV', 'local')
 
 # Point to the correct .env file
-env_file = os.path.join(BASE_DIR, f'.env.{DJANGO_ENV}')
+env_file = os.path.join(BASE_DIR, f'../.env.{DJANGO_ENV}')
 
 # Load environment variables
 environ.Env.read_env(env_file)
