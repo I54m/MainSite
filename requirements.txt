@@ -6,5 +6,6 @@ django-i54m-apiuser @ file:///usr/share/django/django-i54m-apiuser/dist/django-i
 future==1.0.0
 gunicorn==23.0.0
 mysqlclient==2.2.4
+pillow==12.0.0
 redis==5.0.4
 regex==2024.5.15
